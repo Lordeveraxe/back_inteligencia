@@ -6,6 +6,8 @@ from PIL import Image
 import numpy as np
 import os
 
+print("Archivos en el directorio actual:", os.listdir('.'))
+
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 # ID del archivo en Google Drive
@@ -26,8 +28,6 @@ if not os.path.exists(modelo_path):
 
 # Cargar el modelo
 model = load_model(modelo_path)
-
-print("Archivos en el directorio actual:", os.listdir('.'))
 
 app = FastAPI()
 
