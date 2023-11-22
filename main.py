@@ -10,18 +10,24 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 # ID del archivo en Google Drive
 file_id = '1wMb03-UkWY2PmWkvZKUxXZppuINfOFza'
-# URL base para la descarga
-base_url = "https://drive.google.com/uc"
-# Parámetros para la solicitud GET
-params = {'id': file_id, 'confirm': 't'}  # Confirmar la descarga pese a la advertencia
+modelo_path = "modelo_temporal.h5"
 
-# Descargar el modelo
-response = requests.get(base_url, params=params)
-with open("modelo_temporal.h5", "wb") as file:
-    file.write(response.content)
+# Verificar si el modelo ya está descargado
+if not os.path.exists(modelo_path):
+    # URL base para la descarga
+    base_url = "https://drive.google.com/uc"
+    # Parámetros para la solicitud GET
+    params = {'id': file_id, 'confirm': 't'}  # Confirmar la descarga pese a la advertencia
+
+    # Descargar el modelo
+    response = requests.get(base_url, params=params)
+    with open(modelo_path, "wb") as file:
+        file.write(response.content)
 
 # Cargar el modelo
-model = load_model("modelo_temporal.h5")
+model = load_model(modelo_path)
+
+print("Archivos en el directorio actual:", os.listdir('.'))
 
 app = FastAPI()
 
