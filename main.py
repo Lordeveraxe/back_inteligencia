@@ -4,6 +4,8 @@ from tensorflow.keras.models import load_model
 from io import BytesIO
 from PIL import Image
 import numpy as np
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 app = FastAPI()
 
