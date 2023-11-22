@@ -7,7 +7,6 @@ from PIL import Image
 import numpy as np
 import os
 
-app = FastAPI()
 
 print("Archivos en el directorio actual:", os.listdir('.'))
 
@@ -46,6 +45,8 @@ origins = [
     "http://localhost",
     "http://localhost:4200",  # Agrega aquí la URL de tu frontend
 ]
+
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
