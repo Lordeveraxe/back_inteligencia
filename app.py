@@ -6,7 +6,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 import os
-import uvicorn
+import hypercorn
 
 app = FastAPI()
 
