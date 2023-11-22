@@ -1,34 +1,29 @@
 from fastapi import FastAPI, File, UploadFile
 import requests
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 from io import BytesIO
 from PIL import Image
 import numpy as np
 import os
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
-app = FastAPI()
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 # ID del archivo en Google Drive
 file_id = '1wMb03-UkWY2PmWkvZKUxXZppuINfOFza'
-
 # URL base para la descarga
 base_url = "https://drive.google.com/uc"
-
 # Parámetros para la solicitud GET
-params = {
-    'id': file_id,
-    'confirm': 't'  # Parámetro para confirmar la descarga pese a la advertencia
-}
-
-# Enviar una solicitud GET a la URL con los parámetros
-response = requests.get(base_url, params=params)
+params = {'id': file_id, 'confirm': 't'}  # Confirmar la descarga pese a la advertencia
 
 # Descargar el modelo
+response = requests.get(base_url, params=params)
 with open("modelo_temporal.h5", "wb") as file:
     file.write(response.content)
 
+# Cargar el modelo
 model = load_model("modelo_temporal.h5")
+
+app = FastAPI()
 
 @app.get("/")
 async def root():
