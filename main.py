@@ -7,12 +7,22 @@ import numpy as np
 
 app = FastAPI()
 
-# URL de Google Drive para el archivo compartido
-file_id = "1wMb03-UkWY2PmWkvZKUxXZppuINfOFza"
-url = f"https://drive.google.com/uc?id={file_id}"
+# ID del archivo en Google Drive
+file_id = '1wMb03-UkWY2PmWkvZKUxXZppuINfOFza'
+
+# URL base para la descarga
+base_url = "https://drive.google.com/uc"
+
+# Parámetros para la solicitud GET
+params = {
+    'id': file_id,
+    'confirm': 't'  # Parámetro para confirmar la descarga pese a la advertencia
+}
+
+# Enviar una solicitud GET a la URL con los parámetros
+response = requests.get(base_url, params=params)
 
 # Descargar el modelo
-response = requests.get(url)
 with open("modelo_temporal.h5", "wb") as file:
     file.write(response.content)
 
